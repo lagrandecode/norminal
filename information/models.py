@@ -9,9 +9,20 @@ class Information(models.Model):
     surname = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     other_name = models.CharField(max_length=200)
-    designation = models.CharField(max_length=200)
+    # designation = models.CharField(max_length=200)
     grade_level = models.CharField(max_length=5,choices=GRADE,null=False)
     gender = models.CharField(max_length=6,choices=GENDER,null=False)
+    qualification = models.CharField(max_length=60)
+    date_birth = models.DateField()
+    # state_origin = models.CharField()
+    designation_appointement = models.CharField()
+    date_first_appointment = models.DateField()
+    date_present_appointment = models.DateField()
+    employee_number = models.CharField(max_length=20)
+    civil_service_number = models.CharField(max_length=20)
+    mepb_file_number = models.CharField(max_length=20)
+    present_post = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20)
 
     
     
