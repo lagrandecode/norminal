@@ -25,7 +25,7 @@ class Information(models.Model):
     mepb_file_number = models.CharField(max_length=20)
     present_post = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=20)
-    profile_pic = models.ImageField()
+    profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
 
     
     
