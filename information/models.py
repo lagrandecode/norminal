@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Information(models.Model):
+    STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
     LOCAL_GOVERNEMNT = (('Agege Local Government','Agege Local Government'),('Ajeromi-Ifelodun Local Government','Ajeromi-Ifelodun Local Government'),('Alimosho Local Government','Alimosho Local Government'),('Amuwo-Odofin Local Government','Amuwo-Odofin Local Government'),
     ('Apapa Local Government','Apapa Local Government'),('Badagry Local Government','Badagry Local Government'),('Epe Local Government','Epe Local Government'),('Eti-Osa Local Government','Eti-Osa Local Government'),('Ibeju-Lekki Local Government','Ibeju-Lekki Local Government'),('Ifako-Ijaiye Local Government','Ifako-Ijaiye Local Government'),('Ikeja Local Government','Ikeja Local Government'),('Ikorodu Local Government','Ikorodu Local Government'),('Kosofe Local Government','Kosofe Local Government','Lagos Island Local Government','Lagos Island Local Government'),('Lagos Mainland Local Government','Lagos Mainland Local Government'),('Mushin Local Government','Mushin Local Government'),('Ojo Local Government','Ojo Local Government'),('Oshodi-Isolo Local Government','Oshodi-Isolo Local Government'),('Shomolu Local Government','Shomolu Local Government'),('Surulere Local Government','Surulere Local Government'),('outside Nigeria','outside Nigeria'))
@@ -11,7 +12,9 @@ class Information(models.Model):
     surname = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     other_name = models.CharField(max_length=200)
-    # designation = models.CharField(max_length=200)
+    # designation = models.CharField(max_length=200) added by admin 
+    # department = models.CharField(max_length=200) added by admin 
+
     grade_level = models.CharField(max_length=5,choices=GRADE,null=False)
     gender = models.CharField(max_length=6,choices=GENDER,null=False)
     qualification = models.CharField(max_length=60)
@@ -26,6 +29,7 @@ class Information(models.Model):
     present_post = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=20)
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
+    status = models.CharField(max_length=20,choices=STATUS)
 
     
     
