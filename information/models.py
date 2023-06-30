@@ -12,11 +12,8 @@ class Information(models.Model):
     surname = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     other_name = models.CharField(max_length=200)
-    # designation = models.CharField(max_length=200) added by admin 
-    # department = models.CharField(max_length=200) added by admin 
-
     grade_level = models.CharField(max_length=5,choices=GRADE,null=False)
-    gender = models.CharField(max_length=6,choices=GENDER,null=False)
+    gender = models.CharField(max_length=6,choices=GENDER,null=False,default='MALE')
     qualification = models.CharField(max_length=60)
     date_birth = models.DateField()
     state_origin = models.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
@@ -30,6 +27,7 @@ class Information(models.Model):
     mdas_posted = models.PositiveIntegerField()
     phone_number = models.CharField(max_length=20)
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
+    description = models.CharField(max_length=3000)
     status = models.CharField(max_length=20,choices=STATUS)
 
 
