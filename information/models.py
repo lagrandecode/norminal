@@ -71,11 +71,9 @@ class Information(AbstactUser):
     REQUIRED_FIELDS = []
 
 
-
-
-
-
-
+# declaring admin for the app 
+class Admin(models.Model):
+    admin = models.OneToOneField(Information,on_de)
 
 class Department(models.Model):
     name = models.CharField(max_length=120)
