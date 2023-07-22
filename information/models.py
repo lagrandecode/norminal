@@ -71,9 +71,9 @@ class Information(AbstactUser):
     REQUIRED_FIELDS = []
 
 
-# declaring admin for the app 
-class Admin(models.Model):
-    admin = models.OneToOneField(Information,on_delete=models.CASCADE)
+
+
+
 
 
 
@@ -96,7 +96,7 @@ class Designation(models.model):
 
     def __str__(self):
         return self.name
-
+ 
 
 
     
