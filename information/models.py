@@ -73,10 +73,6 @@ class Information(AbstactUser):
 
 
 
-
-
-
-
 class Department(models.Model):
     admin = models.OneToOneField(Information,on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
@@ -96,6 +92,13 @@ class Designation(models.model):
 
     def __str__(self):
         return self.name
+
+
+class Session(models.Model):
+    start_year = models.DateField()
+    end_year = models.DateField()
+    def __str__(self):
+        return "from" + str(self.start_year) "to" + str(self.end_year)
  
 
 
