@@ -72,6 +72,11 @@ class Information(AbstactUser):
 
 
 
+class Admin(models.Model):
+    admin = models.OneToOneField(Information,on_delete=models.CASCADE)
+
+
+
 
 class Department(models.Model):
     admin = models.OneToOneField(Information,on_delete=models.CASCADE)
@@ -85,7 +90,7 @@ class Department(models.Model):
 
 
 class Designation(models.model):
-    admin = models.OneToOneField(Information,on_delete=models.CASCADE)
+    admin = models.OneToOneField(Information,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -98,7 +103,14 @@ class Session(models.Model):
     start_year = models.DateField()
     end_year = models.DateField()
     def __str__(self):
-        return "from" + str(self.start_year) "to" + str(self.end_year)
+        return "from" + str(self.start_year) + "to" + str(self.end_year)
+
+class Staff(models.Model):
+    admin = models.OneToOneField(information,on_delete=models.CASCADE)
+    designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
+    
+
+
  
 
 
