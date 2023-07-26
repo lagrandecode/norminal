@@ -108,6 +108,7 @@ class Session(models.Model):
 class Staff(models.Model):
     admin = models.OneToOneField(information,on_delete=models.CASCADE)
     designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
+    department = models.ForeignKey(Department,on_delete=models.DO_NOTHING)
     
 
 
