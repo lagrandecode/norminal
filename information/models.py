@@ -36,15 +36,38 @@ class MyUserManager(BaseUserManager):
         return self.create_user(email,password,**extra_fields)
 
 
-class Information(AbstractUser):
-    USER_TYPE = ((1,'"HOD',2,"Staff"))
+class User(AbstractUser):
+    USER_TYPE = ((1,'"HOD',),(2,"Staff"))
 
 
     user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
-    LOCAL_GOVERNMENT = (('Agege Local Government','Agege Local Government'),('Ajeromi-Ifelodun Local Government','Ajeromi-Ifelodun Local Government'),('Alimosho Local Government','Alimosho Local Government'),('Amuwo-Odofin Local Government','Amuwo-Odofin Local Government'),
-    ('Apapa Local Government','Apapa Local Government'),('Badagry Local Government','Badagry Local Government'),('Epe Local Government','Epe Local Government'),('Eti-Osa Local Government','Eti-Osa Local Government'),('Ibeju-Lekki Local Government','Ibeju-Lekki Local Government'),('Ifako-Ijaiye Local Government','Ifako-Ijaiye Local Government'),('Ikeja Local Government','Ikeja Local Government'),('Ikorodu Local Government','Ikorodu Local Government'),('Kosofe Local Government','Kosofe Local Government','Lagos Island Local Government','Lagos Island Local Government'),('Lagos Mainland Local Government','Lagos Mainland Local Government'),('Mushin Local Government','Mushin Local Government'),('Ojo Local Government','Ojo Local Government'),('Oshodi-Isolo Local Government','Oshodi-Isolo Local Government'),('Shomolu Local Government','Shomolu Local Government'),('Surulere Local Government','Surulere Local Government'),('outside Nigeria','outside Nigeria'))
+    
+    LOCAL_GOVERNMENT = (
+    ('Agege Local Government', 'Agege Local Government'),
+    ('Ajeromi-Ifelodun Local Government', 'Ajeromi-Ifelodun Local Government'),
+    ('Alimosho Local Government', 'Alimosho Local Government'),
+    ('Amuwo-Odofin Local Government', 'Amuwo-Odofin Local Government'),
+    ('Apapa Local Government', 'Apapa Local Government'),
+    ('Badagry Local Government', 'Badagry Local Government'),
+    ('Epe Local Government', 'Epe Local Government'),
+    ('Eti-Osa Local Government', 'Eti-Osa Local Government'),
+    ('Ibeju-Lekki Local Government', 'Ibeju-Lekki Local Government'),
+    ('Ifako-Ijaiye Local Government', 'Ifako-Ijaiye Local Government'),
+    ('Ikeja Local Government', 'Ikeja Local Government'),
+    ('Ikorodu Local Government', 'Ikorodu Local Government'),
+    ('Kosofe Local Government', 'Kosofe Local Government'),
+    ('Lagos Island Local Government', 'Lagos Island Local Government'),
+    ('Lagos Mainland Local Government', 'Lagos Mainland Local Government'),
+    ('Mushin Local Government', 'Mushin Local Government'),
+    ('Ojo Local Government', 'Ojo Local Government'),
+    ('Oshodi-Isolo Local Government', 'Oshodi-Isolo Local Government'),
+    ('Shomolu Local Government', 'Shomolu Local Government'),
+    ('Surulere Local Government', 'Surulere Local Government'),
+    ('Outside Nigeria', 'Outside Nigeria'),)
+
+  
     GRADE = (('GL1','GL1'),('GL2','GL2'),('GL3','GL3'),('GL4','GL4'),('GL5','GL5'),('GL6','GL6'),('GL7','GL7'),('GL8','GL8'),('GL9','GL9'),('GL10','GL10'),('GL12','GL12'),('GL13','GL13'),('GL14','GL14'),('GL15','GL15'),('GL16','GL16'),('GL17','GL17'))
     username = None  # Removed username, using email instead
     email = models.EmailField(unique=True)
@@ -56,7 +79,7 @@ class Information(AbstractUser):
     qualification = models.CharField(max_length=60)
     date_birth = models.DateField()
     state_origin = models.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
-    designation_appointement = models.CharField()
+    designation_appointement = models.CharField(max_length=50)
     date_first_appointment = models.DateField()
     date_present_appointment = models.DateField()
     employee_number = models.CharField(max_length=20)
@@ -77,13 +100,13 @@ class Information(AbstractUser):
 
 
 class Admin(models.Model):
-    admin = models.OneToOneField(Information,on_delete=models.CASCADE)
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
 
 
 
 
 class Department(models.Model):
-    admin = models.OneToOneField(Information,on_delete=models.CASCADE)
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -94,7 +117,7 @@ class Department(models.Model):
 
 
 class Designation(models.Model):
-    admin = models.OneToOneField(Information,on_delete=models.DO_NOTHING)
+    admin = models.OneToOneField(User,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -110,7 +133,7 @@ class Session(models.Model):
         return "from" + str(self.start_year) + "to" + str(self.end_year)
 
 class Staff(models.Model):
-    admin = models.OneToOneField(Information,on_delete=models.CASCADE)
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
     designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department,on_delete=models.DO_NOTHING)
     

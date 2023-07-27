@@ -113,7 +113,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'information.AbstractUser'
+AUTH_USER_MODEL = 'information.User'
 
 
 # Static files (CSS, JavaScript, Images)
