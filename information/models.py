@@ -37,7 +37,10 @@ class MyUserManager(BaseUserManager):
 
 
 class Information(AbstactUser):
- 
+    USER_TYPE = ((1,'"HOD',2,"Staff"))
+
+
+    user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
     LOCAL_GOVERNEMNT = (('Agege Local Government','Agege Local Government'),('Ajeromi-Ifelodun Local Government','Ajeromi-Ifelodun Local Government'),('Alimosho Local Government','Alimosho Local Government'),('Amuwo-Odofin Local Government','Amuwo-Odofin Local Government'),
@@ -62,6 +65,7 @@ class Information(AbstactUser):
     present_post = models.CharField(max_length=20)
     mdas_posted = models.PositiveIntegerField()
     phone_number = models.CharField(max_length=20)
+    phone_num_nextofkin = models.CharField(max_length=20)
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
     description = models.CharField(max_length=3000)
     status = models.CharField(max_length=20,choices=STATUS)
