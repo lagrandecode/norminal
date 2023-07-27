@@ -43,7 +43,7 @@ class User(AbstractUser):
     user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
-    
+
     LOCAL_GOVERNMENT = (
     ('Agege Local Government', 'Agege Local Government'),
     ('Ajeromi-Ifelodun Local Government', 'Ajeromi-Ifelodun Local Government'),
@@ -97,13 +97,8 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-
-
 class Admin(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
-
-
-
 
 class Department(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
@@ -114,8 +109,6 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
-
-
 class Designation(models.Model):
     admin = models.OneToOneField(User,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100)
@@ -124,7 +117,6 @@ class Designation(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Session(models.Model):
     start_year = models.DateField()
@@ -136,6 +128,12 @@ class Staff(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
     designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department,on_delete=models.DO_NOTHING)
+
+class StaffNotification(models.Model):
+    staff = models.ForeignKey(Staff,on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
 
 
