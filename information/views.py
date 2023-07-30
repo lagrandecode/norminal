@@ -9,13 +9,14 @@ from . import serializers
 
 
 
-# class LoginView(generics.GenericAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = serializers.InformationSerializer
-#     def get(self,request):
-#         user = User.objects.all()
-#         serializers = serializer_class(user,many=True)
-#         ret
+class SignupView(generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = serializers.
+    def post(self,request):
+        serializers = self.serializer_class(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response
 
 
 
