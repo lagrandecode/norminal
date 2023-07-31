@@ -11,7 +11,7 @@ from . import serializers
 
 class SignupView(generics.GenericAPIView):
     queryset = User.objects.all()
-    serializer_class = serializers.
+    serializer_class = serializers.UserCreationSerializer
     def post(self,request):
         serializers = self.serializer_class(data=request.data)
         if serializers.is_valid():
