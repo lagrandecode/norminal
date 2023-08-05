@@ -67,9 +67,10 @@ class User(AbstractUser):
     ('Oshodi-Isolo Local Government', 'Oshodi-Isolo Local Government'),
     ('Shomolu Local Government', 'Shomolu Local Government'),
     ('Surulere Local Government', 'Surulere Local Government'),
+    ('other state in Nigeria','other state in Nigeria'),
     ('Outside Nigeria', 'Outside Nigeria'),)
 
-  
+
     GRADE = (('GL1','GL1'),('GL2','GL2'),('GL3','GL3'),('GL4','GL4'),('GL5','GL5'),('GL6','GL6'),('GL7','GL7'),('GL8','GL8'),('GL9','GL9'),('GL10','GL10'),('GL12','GL12'),('GL13','GL13'),('GL14','GL14'),('GL15','GL15'),('GL16','GL16'),('GL17','GL17'))
     username = None  # Removed username, using email instead
     email = models.EmailField(max_length=80,unique=True)
@@ -136,8 +137,6 @@ class StaffNotification(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
 
     
 @receiver(post_save,sender=User)
