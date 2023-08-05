@@ -16,7 +16,8 @@ class SignupView(generics.GenericAPIView):
         serializers = self.serializer_class(data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response
+            return Response(serializers.data,status=status.HTTP_200_OK)
+        return Response(serializers.error,status=status.HTTP_400_BAD_REQUEST)
 
 
 
