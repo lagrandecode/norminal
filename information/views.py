@@ -17,7 +17,7 @@ class SignupView(generics.GenericAPIView):
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data,status=status.HTTP_200_OK)
-        return Response(serializers.error,status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -34,9 +34,14 @@ class UserInfo(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.InformationSerializer
     def get(self,request):
-        information = User.objects.all()
-        serializers = self.serializer_class(information,many=True)
+        users = User.objects.all()
+        serializers = self.serializer_class(users,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
-
+    def post(self,request):
+        serializers = self.serializer_class(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data,status=staus.HTTP_200_OK)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
