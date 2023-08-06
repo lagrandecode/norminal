@@ -93,7 +93,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20)
     phone_num_nextofkin = models.CharField(max_length=20)
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
-    description = models.CharField(max_length=3000)
+    description = models.CharField(max_length=5000)
     status = models.CharField(max_length=20,choices=STATUS)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

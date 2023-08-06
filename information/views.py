@@ -29,3 +29,14 @@ class LoginView(APIView):
             if request.user.user_type == '2':
                 return Response({'message':"staff user interface"})
 
+
+class UserInfo(generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = serializers.InformationSerializer
+    def get(self,request):
+        information = User.objects.all()
+        serializers = self.serializer_class(information,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+
+
+
