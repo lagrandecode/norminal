@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import APIView
 from .models import *
 from . import serializers
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 # Create your views here.
 
@@ -33,7 +34,9 @@ class LoginView(APIView):
 class UserInfo(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.InformationSerializer
+    permission_class = [IsAdminUser]
     def get(self,request):
+
         users = User.objects.all()
         serializers = self.serializer_class(users,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
