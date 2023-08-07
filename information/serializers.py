@@ -21,8 +21,9 @@ class InformationSerializer(serializers.ModelSerializer):
         'phone_num_nextofkin',
         'profile_pic',
         'description',
-        'status'
+        'status',
         ]
+        # fields = '__all__'
 
 
 class UserCreationSerializer(serializers.ModelSerializer):

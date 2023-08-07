@@ -6,6 +6,7 @@ from .models import *
 admin.site.register(User)
 admin.site.register(Admin)
 admin.site.register(Department)
+admin.site.register(Designation)
 admin.site.register(Session)
 admin.site.register(Staff)
 

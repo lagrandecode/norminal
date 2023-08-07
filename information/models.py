@@ -3,10 +3,10 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-
+from datetime import datetime
 
 # from phonenumber_field.modelfields import PhoneNumberField
-from django.db import models
+
 from django.db import IntegrityError
 # Create your models here.
 
@@ -39,9 +39,10 @@ class MyUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    objects = MyUserManager()
+
+
     USER_TYPE = ((1,'"HOD',),(2,"Staff"))
-
-
     user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
@@ -80,16 +81,16 @@ class User(AbstractUser):
     grade_level = models.CharField(max_length=5,choices=GRADE,null=False)
     gender = models.CharField(max_length=6,choices=GENDER,null=False,default='MALE')
     qualification = models.CharField(max_length=60)
-    date_birth = models.DateField()
+    date_birth = models.DateField(null=False,blank=False,default=datetime.now)
     state_origin = models.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
     designation_appointement = models.CharField(max_length=150)
-    date_first_appointment = models.DateField()
-    date_present_appointment = models.DateField()
+    date_first_appointment = models.DateField(null=False,blank=False,default=datetime.now)
+    date_present_appointment = models.DateField(null=False,blank=False,default=datetime.now)
     employee_number = models.CharField(max_length=20)
     civil_service_number = models.CharField(max_length=20)
     mepb_file_number = models.CharField(max_length=20)
-    present_post = models.CharField(max_length=20)
-    mdas_posted = models.PositiveIntegerField()
+    present_post = models.CharField(max_length=500)
+    mdas_posted = models.CharField(max_length=150)
     phone_number = models.CharField(max_length=20)
     phone_num_nextofkin = models.CharField(max_length=20)
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
@@ -113,7 +114,7 @@ class Department(models.Model):
         return self.name
 
 class Designation(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.DO_NOTHING)
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
