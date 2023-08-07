@@ -82,7 +82,7 @@ class User(AbstractUser):
     qualification = models.CharField(max_length=60)
     date_birth = models.DateField()
     state_origin = models.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
-    designation_appointement = models.CharField(max_length=50)
+    designation_appointement = models.CharField(max_length=150)
     date_first_appointment = models.DateField()
     date_present_appointment = models.DateField()
     employee_number = models.CharField(max_length=20)

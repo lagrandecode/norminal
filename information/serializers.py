@@ -10,7 +10,19 @@ class InformationSerializer(serializers.ModelSerializer):
     # password = serializers.CharField(max_length=18,write_only=True)
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['name','other_name','surname','email','grade_level','gender','qualification','date_birth','state_origin','designation_appointement','date_first_appointment',
+        'date_present_appointment',
+        'employee_number',
+        'civil_service_number',
+        'mepb_file_number',
+        'present_post',
+        'mdas_posted',
+        'phone_number',
+        'phone_num_nextofkin',
+        'profile_pic',
+        'description',
+        'status'
+        ]
 
 
 class UserCreationSerializer(serializers.ModelSerializer):
