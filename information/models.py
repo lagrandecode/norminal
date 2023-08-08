@@ -105,7 +105,6 @@ class Admin(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
 
 class Department(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -114,7 +113,6 @@ class Department(models.Model):
         return self.name
 
 class Designation(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -132,6 +130,7 @@ class Staff(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
     designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department,on_delete=models.DO_NOTHING)
+    session = models.ForeignKey(Session,on_delete=models.DO_NOTHING)
 
 class StaffNotification(models.Model):
     staff = models.ForeignKey(Staff,on_delete=models.CASCADE)
