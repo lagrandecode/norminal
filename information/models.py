@@ -71,7 +71,6 @@ class User(AbstractUser):
     ('other state in Nigeria','other state in Nigeria'),
     ('Outside Nigeria', 'Outside Nigeria'),)
 
-
     GRADE = (('GL1','GL1'),('GL2','GL2'),('GL3','GL3'),('GL4','GL4'),('GL5','GL5'),('GL6','GL6'),('GL7','GL7'),('GL8','GL8'),('GL9','GL9'),('GL10','GL10'),('GL12','GL12'),('GL13','GL13'),('GL14','GL14'),('GL15','GL15'),('GL16','GL16'),('GL17','GL17'))
     username = None  # Removed username, using email instead
     email = models.EmailField(max_length=80,unique=True)
@@ -116,13 +115,13 @@ class Designation(models.Model):
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+  
     def __str__(self):
         return self.name
 
 class Session(models.Model):
-    start_year = models.DateField()
-    end_year = models.DateField()
+    start_year = models.DateField(null=False,blank=False,default=datetime.now)
+    end_year = models.DateField(null=False,blank=False,default=datetime.now)
     def __str__(self):
         return "from" + str(self.start_year) + "to" + str(self.end_year)
 
@@ -130,7 +129,7 @@ class Staff(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
     designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department,on_delete=models.DO_NOTHING)
-    session = models.ForeignKey(Session,on_delete=models.DO_NOTHING)
+    # session = models.ForeignKey(Session,on_delete=models.DO_NOTHING)
 
 class StaffNotification(models.Model):
     staff = models.ForeignKey(Staff,on_delete=models.CASCADE)

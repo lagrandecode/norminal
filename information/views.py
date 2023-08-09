@@ -54,7 +54,6 @@ class StaffInfo(generics.GenericAPIView):
     serializer_class = serializers.StaffSerializer
     permission_class = [IsAdminUser]
     def get(self,request):
-
         users = Staff.objects.all()
         serializers = self.serializer_class(users,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
