@@ -5,9 +5,6 @@ from .models import *
 
 
 class InformationSerializer(serializers.ModelSerializer):
-
-    # email = serializers.EmailField(max_length=80)
-    # password = serializers.CharField(max_length=18,write_only=True)
     class Meta:
         model = User
         fields = ['name','other_name','surname','email','grade_level','gender','qualification','date_birth','state_origin','designation_appointement','date_first_appointment',
@@ -26,6 +23,14 @@ class InformationSerializer(serializers.ModelSerializer):
         # fields = '__all__'
 
 
+
+class StaffSerializer(InformationSerializer):
+    class Meta(InformationSerializer.Meta):
+        model = Staff
+        fields = InformationSerializer.Meta.fields + ['designation', 'department']
+
+
+
 class UserCreationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=80)
     password = serializers.CharField(max_length=18,write_only=True)
@@ -34,7 +39,13 @@ class UserCreationSerializer(serializers.ModelSerializer):
         fields = ['email','password']
 
 
-class StaffSerializer(serializers.ModelSerializer):
+class TestingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Staff
-        fields = '__all__'
+        model = Texta
+        fields = ['name']
+
+
+class TestingbSerializer(TestingSerializer):
+    class Meta(TestingSerializer):
+        model = Textb
+        fields = TestingSerializer.Meta.fields + ['des']
