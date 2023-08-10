@@ -83,11 +83,11 @@ class Testinga(generics.GenericAPIView):
 
 
 class Testingb(generics.GenericAPIView):
-    queryset = Textb.objects.all()
+    queryset = Texta.objects.all()
     serializer_class = serializers.TestingbSerializer
     permission_class = [IsAdminUser]
     def get(self,request):
-        users = Textb.objects.all()
+        users = Texta.objects.all()
         serializers = self.serializer_class(users,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
     def post(self,request):

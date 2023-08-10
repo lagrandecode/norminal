@@ -45,7 +45,8 @@ class TestingSerializer(serializers.ModelSerializer):
         fields = ['name']
 
 
-class TestingbSerializer(serializers.ModelSerializer):
-    class Meta:
+class TestingbSerializer(TestingSerializer):
+    # des = serializers.CharField(max_length=20)
+    class Meta(TestingSerializer.Meta):
         model = Textb
-        fields = TestingSerializer.Meta.fields + ['des']
+        fields = TestingSerializer.Meta.fields 
