@@ -10,4 +10,9 @@ admin.site.register(Designation)
 admin.site.register(Session)
 admin.site.register(Staff)
 
+admin.site.register(Texta)
+
+admin.site.register(Textb)
+
+
 
