@@ -6,6 +6,31 @@ from datetime import datetime
 
 
 class InformationSerializer(serializers.ModelSerializer):
+
+    LOCAL_GOVERNMENT = (
+    ('Agege Local Government', 'Agege Local Government'),
+    ('Ajeromi-Ifelodun Local Government', 'Ajeromi-Ifelodun Local Government'),
+    ('Alimosho Local Government', 'Alimosho Local Government'),
+    ('Amuwo-Odofin Local Government', 'Amuwo-Odofin Local Government'),
+    ('Apapa Local Government', 'Apapa Local Government'),
+    ('Badagry Local Government', 'Badagry Local Government'),
+    ('Epe Local Government', 'Epe Local Government'),
+    ('Eti-Osa Local Government', 'Eti-Osa Local Government'),
+    ('Ibeju-Lekki Local Government', 'Ibeju-Lekki Local Government'),
+    ('Ifako-Ijaiye Local Government', 'Ifako-Ijaiye Local Government'),
+    ('Ikeja Local Government', 'Ikeja Local Government'),
+    ('Ikorodu Local Government', 'Ikorodu Local Government'),
+    ('Kosofe Local Government', 'Kosofe Local Government'),
+    ('Lagos Island Local Government', 'Lagos Island Local Government'),
+    ('Lagos Mainland Local Government', 'Lagos Mainland Local Government'),
+    ('Mushin Local Government', 'Mushin Local Government'),
+    ('Ojo Local Government', 'Ojo Local Government'),
+    ('Oshodi-Isolo Local Government', 'Oshodi-Isolo Local Government'),
+    ('Shomolu Local Government', 'Shomolu Local Government'),
+    ('Surulere Local Government', 'Surulere Local Government'),
+    ('other state in Nigeria','other state in Nigeria'),
+    ('Outside Nigeria', 'Outside Nigeria'),)
+
     email = serializers.EmailField(max_length=80)
     surname = serializers.CharField(max_length=200)
     name = serializers.CharField(max_length=200)
@@ -14,7 +39,7 @@ class InformationSerializer(serializers.ModelSerializer):
     gender = serializers.ChoiceField(choices=[('M','MALE'),('F','FEMALE')])
     qualification = serializers.CharField(max_length=60)
     date_birth = serializers.DateField(default=datetime.now)
-    # # state_origin = serializers.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
+    state_origin = serializers.ChoiceField(choices=LOCAL_GOVERNMENT)
     # designation_appointement = serializers.CharField(max_length=150)
     # date_first_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
     # date_present_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
@@ -39,7 +64,7 @@ class InformationSerializer(serializers.ModelSerializer):
         'gender',
         'qualification',
         'date_birth',
-        # # 'state_origin',
+        'state_origin',
         # 'designation_appointement',
         # 'date_first_appointment',
         # 'date_present_appointment',
