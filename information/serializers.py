@@ -40,8 +40,8 @@ class InformationSerializer(serializers.ModelSerializer):
     qualification = serializers.CharField(max_length=60)
     date_birth = serializers.DateField(default=datetime.now)
     state_origin = serializers.ChoiceField(choices=LOCAL_GOVERNMENT)
-    # designation_appointement = serializers.CharField(max_length=150)
-    # date_first_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
+    designation_appointement = serializers.CharField(max_length=150)
+    date_first_appointment = serializers.DateField(default=datetime.now)
     # date_present_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
     # employee_number = serializers.CharField(max_length=20)
     # civil_service_number = serializers.CharField(max_length=20)
@@ -65,8 +65,8 @@ class InformationSerializer(serializers.ModelSerializer):
         'qualification',
         'date_birth',
         'state_origin',
-        # 'designation_appointement',
-        # 'date_first_appointment',
+        'designation_appointement',
+        'date_first_appointment',
         # 'date_present_appointment',
         # 'employee_number',
         # 'civil_service_number',
