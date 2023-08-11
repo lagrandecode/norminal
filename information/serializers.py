@@ -1,30 +1,63 @@
 from rest_framework import serializers
 from .models import *
+from datetime import datetime
 
 
 
 
 class InformationSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=80)
+    surname = serializers.CharField(max_length=200)
+    name = serializers.CharField(max_length=200)
+    other_name = serializers.CharField(max_length=200)
+    grade_level = serializers.ChoiceField(choices=[('GL1','GL1'),('GL2','GL2'),('GL3','GL3'),('GL4','GL4'),('GL5','GL5'),('GL6','GL6'),('GL7','GL7'),('GL8','GL8'),('GL9','GL9'),('GL10','GL10'),('GL12','GL12'),('GL13','GL13'),('GL14','GL14'),('GL15','GL15'),('GL16','GL16'),('GL17','GL17')])
+    gender = serializers.ChoiceField(choices=[('M','MALE'),('F','FEMALE')])
+    qualification = serializers.CharField(max_length=60)
+    date_birth = serializers.DateField(default=datetime.now)
+    # # state_origin = serializers.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
+    # designation_appointement = serializers.CharField(max_length=150)
+    # date_first_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
+    # date_present_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
+    # employee_number = serializers.CharField(max_length=20)
+    # civil_service_number = serializers.CharField(max_length=20)
+    # mepb_file_number = serializers.CharField(max_length=20)
+    # present_post = serializers.CharField(max_length=500)
+    # mdas_posted = serializers.CharField(max_length=150)
+    # phone_number = serializers.CharField(max_length=20)
+    # phone_num_nextofkin = serializers.CharField(max_length=20)
+    # profile_pic = serializers.ImageField(upload_to='images/',null=True,blank=True)
+    # description = serializers.CharField(max_length=5000)
+    # # status = serializers.CharField(max_length=20,choices=STATUS)
+
     class Meta:
         model = User
-        fields = ['name','other_name','surname','email','grade_level','gender','qualification','date_birth','state_origin','designation_appointement','date_first_appointment',
-        'date_present_appointment',
-        'employee_number',
-        'civil_service_number',
-        'mepb_file_number',
-        'present_post',
-        'mdas_posted',
-        'phone_number',
-        'phone_num_nextofkin',
-        'profile_pic',
-        'description',
-        'status',
+        fields = ['name',
+        'other_name',
+        'surname',
+        'email',
+        'grade_level',
+        'gender',
+        'qualification',
+        'date_birth',
+        # # 'state_origin',
+        # 'designation_appointement',
+        # 'date_first_appointment',
+        # 'date_present_appointment',
+        # 'employee_number',
+        # 'civil_service_number',
+        # 'mepb_file_number',
+        # 'present_post',
+        # 'mdas_posted',
+        # 'phone_number',
+        # 'phone_num_nextofkin',
+        # 'profile_pic',
+        # 'description',
+        # 'status',
         ]
-        # fields = '__all__'
-
-
 
 class StaffSerializer(InformationSerializer):
+    # def __init__(self,*args,**kwargs):
+    #     super().__init__(*args,**kwargs)
     class Meta(InformationSerializer.Meta):
         model = Staff
         fields = InformationSerializer.Meta.fields + ['designation', 'department']
@@ -40,13 +73,16 @@ class UserCreationSerializer(serializers.ModelSerializer):
 
 
 class TestingSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
     class Meta:
         model = Texta
         fields = ['name']
 
 
 class TestingbSerializer(TestingSerializer):
-    # des = serializers.CharField(max_length=20)
+    # des = serializers.CharField()
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
     class Meta(TestingSerializer.Meta):
         model = Textb
-        fields = TestingSerializer.Meta.fields 
+        fields = TestingSerializer.Meta.fields + ['des','info']
