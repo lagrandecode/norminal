@@ -162,3 +162,4 @@ class Texta(models.Model):
 class Textb(models.Model):
     des = models.CharField(max_length=20)
     info = models.CharField(max_length=20)
+    info1 = models.CharField(max_length=20)

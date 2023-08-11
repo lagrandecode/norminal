@@ -78,7 +78,7 @@ class InformationSerializer(serializers.ModelSerializer):
         'phone_number',
         'phone_num_nextofkin',
         'profile_pic',
-        'description',
+        'biography',
         'status',
         ]
 
@@ -107,9 +107,9 @@ class TestingSerializer(serializers.ModelSerializer):
 
 
 class TestingbSerializer(TestingSerializer):
-    # des = serializers.CharField()
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
+    des = serializers.CharField()
+    info = serializers.CharField()
+    info1=serializers.CharField()
     class Meta(TestingSerializer.Meta):
         model = Textb
-        fields = TestingSerializer.Meta.fields + ['des','info']
+        fields = TestingSerializer.Meta.fields + ['des','info','info1']

@@ -82,17 +82,89 @@ class Testinga(generics.GenericAPIView):
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
+# class Testingb(generics.GenericAPIView):
+#     def post(self, request):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#         # Remove the inherited name field before saving
+#             validated_data = serializer.validated_data
+#             validated_data.pop('name', None)
+        
+#             instance = Textb.objects.create(**validated_data)
+#             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#     def get(self,request):
+#         users = Textb.objects.all()
+#         serializers = self.serializer_class(users,many=True)
+#         return Response(serializers.data,status=status.HTTP_200_OK)
+#     def post(self,request):
+#         serializers = self.serializer_class(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()     
+#             return Response(serializers.data,status=status.HTTP_200_OK)
+#         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+# class Testingb(generics.GenericAPIView):
+#     serializer_class = serializers.TestingbSerializer  # Make sure to define this attribute
+    
+#     def post(self, request):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             validated_data = serializer.validated_data
+#             validated_data.pop('name', None)
+        
+#             instance = Textb.objects.create(**validated_data)
+#             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#     def get(self, request):
+#         users = Textb.objects.all()
+#         serializer = self.serializer_class(users, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# class Testingb(generics.ListCreateAPIView):
+#     queryset = Textb.objects.all()  # Define the queryset attribute
+#     serializer_class = serializers.TestingbSerializer
+#     permission_classes = [IsAdminUser]
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             validated_data = serializer.validated_data
+#             instance = Textb.objects.create(**validated_data)
+#             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#     def get(self, request, *args, **kwargs):
+#         queryset = self.get_queryset()  # Use the queryset attribute
+#         serializer = self.serializer_class(queryset, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
 class Testingb(generics.GenericAPIView):
-    queryset = Textb.objects.all()
+    queryset = Textb.objects.all()  # Define the queryset attribute
     serializer_class = serializers.TestingbSerializer
-    permission_class = [IsAdminUser]
-    def get(self,request):
-        users = Textb.objects.all()
-        serializers = self.serializer_class(users,many=True)
-        return Response(serializers.data,status=status.HTTP_200_OK)
-    def post(self,request):
-        serializers = self.serializer_class(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data,status=status.HTTP_200_OK)
-        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+    permission_classes = [IsAdminUser]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            validated_data = serializer.validated_data
+            validated_data.pop('name', None)  # Remove the 'name' field
+            instance = Textb.objects.create(**validated_data)
+            return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        queryset = Textb.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+
