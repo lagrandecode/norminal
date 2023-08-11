@@ -31,6 +31,8 @@ class InformationSerializer(serializers.ModelSerializer):
     ('other state in Nigeria','other state in Nigeria'),
     ('Outside Nigeria', 'Outside Nigeria'),)
 
+    STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
+
     email = serializers.EmailField(max_length=80)
     surname = serializers.CharField(max_length=200)
     name = serializers.CharField(max_length=200)
@@ -42,17 +44,17 @@ class InformationSerializer(serializers.ModelSerializer):
     state_origin = serializers.ChoiceField(choices=LOCAL_GOVERNMENT)
     designation_appointement = serializers.CharField(max_length=150)
     date_first_appointment = serializers.DateField(default=datetime.now)
-    # date_present_appointment = serializers.DateField(null=False,blank=False,default=datetime.now)
-    # employee_number = serializers.CharField(max_length=20)
-    # civil_service_number = serializers.CharField(max_length=20)
-    # mepb_file_number = serializers.CharField(max_length=20)
-    # present_post = serializers.CharField(max_length=500)
-    # mdas_posted = serializers.CharField(max_length=150)
-    # phone_number = serializers.CharField(max_length=20)
-    # phone_num_nextofkin = serializers.CharField(max_length=20)
-    # profile_pic = serializers.ImageField(upload_to='images/',null=True,blank=True)
-    # description = serializers.CharField(max_length=5000)
-    # # status = serializers.CharField(max_length=20,choices=STATUS)
+    date_present_appointment = serializers.DateField(default=datetime.now)
+    employee_number = serializers.CharField(max_length=20)
+    civil_service_number = serializers.CharField(max_length=20)
+    mepb_file_number = serializers.CharField(max_length=20)
+    present_post = serializers.CharField(max_length=500)
+    mdas_posted = serializers.CharField(max_length=150)
+    phone_number = serializers.CharField(max_length=20)
+    phone_num_nextofkin = serializers.CharField(max_length=20)
+    profile_pic = serializers.ImageField()
+    biography = serializers.CharField(max_length=5000)
+    status = serializers.ChoiceField(choices=STATUS)
 
     class Meta:
         model = User
@@ -67,17 +69,17 @@ class InformationSerializer(serializers.ModelSerializer):
         'state_origin',
         'designation_appointement',
         'date_first_appointment',
-        # 'date_present_appointment',
-        # 'employee_number',
-        # 'civil_service_number',
-        # 'mepb_file_number',
-        # 'present_post',
-        # 'mdas_posted',
-        # 'phone_number',
-        # 'phone_num_nextofkin',
-        # 'profile_pic',
-        # 'description',
-        # 'status',
+        'date_present_appointment',
+        'employee_number',
+        'civil_service_number',
+        'mepb_file_number',
+        'present_post',
+        'mdas_posted',
+        'phone_number',
+        'phone_num_nextofkin',
+        'profile_pic',
+        'description',
+        'status',
         ]
 
 class StaffSerializer(InformationSerializer):
