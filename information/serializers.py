@@ -82,6 +82,8 @@ class InformationSerializer(serializers.ModelSerializer):
         'status',
         ]
 
+
+
 class StaffSerializer(InformationSerializer):
     class Meta(InformationSerializer.Meta):
         model = Staff
@@ -105,7 +107,4 @@ class UserCreationSerializer(serializers.ModelSerializer):
 #         fields = InformationSerializer.Meta.fields
 
 
-class StaffSerializer(InformationSerializer):
-    class Meta(InformationSerializer.Meta):
-        model = Staff
-        fields = InformationSerializer.Meta.fields + ['designation', 'department']
+
