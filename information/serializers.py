@@ -83,8 +83,6 @@ class InformationSerializer(serializers.ModelSerializer):
         ]
 
 class StaffSerializer(InformationSerializer):
-    # def __init__(self,*args,**kwargs):
-    #     super().__init__(*args,**kwargs)
     class Meta(InformationSerializer.Meta):
         model = Staff
         fields = InformationSerializer.Meta.fields + ['designation', 'department']
