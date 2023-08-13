@@ -97,23 +97,15 @@ class UserCreationSerializer(serializers.ModelSerializer):
         fields = ['email','password']
 
 
-class TestingSerializer(serializers.ModelSerializer):
-    name = serializers.CharField()
-    class Meta:
-        model = Texta
-        fields = ['name']
+# class AdminSerializer(InformationSerializer):
+#     def __init__(self,*args,**kwargs):
+#         super(AdminSerializer,self).__init__(*args,**kwargs)
+#     class Meta(InformationSerializer.Meta):
+#         model=Admin
+#         fields = InformationSerializer.Meta.fields
 
 
-class TestingbSerializer(TestingSerializer):
-    des = serializers.CharField()
-    info = serializers.CharField()
-    info1=serializers.CharField()
-    class Meta(TestingSerializer.Meta):
-        model = Textb
-        fields = TestingSerializer.Meta.fields + ['des','info','info1']
-
-
-class TestcSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Testc
-        fields = '__all__'
+class StaffSerializer(InformationSerializer):
+    class Meta(InformationSerializer.Meta):
+        model = Staff
+        fields = InformationSerializer.Meta.fields + ['designation', 'department']
