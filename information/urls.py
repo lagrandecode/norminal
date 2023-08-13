@@ -9,5 +9,6 @@ urlpatterns = [
     path('staff/',views.StaffInfo.as_view(),name='staff'),
     path('testa/',views.Testinga.as_view(),name='testa'),
     path('testb/',views.Testingb.as_view(),name='testb'),
+    path('testc/',views.Testingc.as_view(),name='testc'),
 
 ]

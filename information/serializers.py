@@ -111,3 +111,9 @@ class TestingbSerializer(TestingSerializer):
     class Meta(TestingSerializer.Meta):
         model = Textb
         fields = TestingSerializer.Meta.fields + ['des','info','info1']
+
+
+class TestcSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Testc
+        fields = '__all__'
