@@ -59,8 +59,8 @@ class StaffUser(generics.GenericAPIView):
     def post(self,request):
         serializers = self.serializer_class(data=request.data)
         if serializers.is_valid():
-            staff_data = serializer.validated_data['Staff']
-            # name = serializers.cleaned_data.get('name')
+            # staff_data = serializer.validated_data['Staff']
+            name = serializers.cleaned_data.get('name')
             staff = User.objects.create_user(name=name,user_type=2)
             serializers.save(staff)
             return Response(serializers.data,status=status.HTTP_200_OK)
