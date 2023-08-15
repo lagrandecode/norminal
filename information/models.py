@@ -154,16 +154,3 @@ def save_user_profile(sender,instance,**kwargs):
     if instance.user_type==2:
         instance.staff.save()
 
-    
-    
-class Texta(models.Model):
-    name = models.CharField(max_length=20)
-
-class Textb(models.Model):
-    des = models.CharField(max_length=20)
-    info = models.CharField(max_length=20)
-    info1 = models.CharField(max_length=20)
-
-class Testc(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=20)
