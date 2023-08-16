@@ -84,10 +84,10 @@ class InformationSerializer(serializers.ModelSerializer):
 
 
 
-class StaffSerializer(InformationSerializer):
-    class Meta(InformationSerializer.Meta):
+class StaffSerializer(serializers.ModelSerializer):
+    class Meta:
         model = Staff
-        fields = InformationSerializer.Meta.fields + ['designation', 'department']
+        fields = '__all__'
 
 
 
