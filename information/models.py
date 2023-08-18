@@ -37,6 +37,28 @@ class MyUserManager(BaseUserManager):
 
         return self.create_user(email,password,**extra_fields)
 
+class Department(models.Model):
+    name = models.CharField(max_length=120)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class Designation(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+  
+    def __str__(self):
+        return self.name
+
+class Session(models.Model):
+    start_year = models.DateField(null=False,blank=False,default=datetime.now)
+    end_year = models.DateField(null=False,blank=False,default=datetime.now)
+    def __str__(self):
+        return "from" + str(self.start_year) + "to" + str(self.end_year)
+
 
 class User(AbstractUser):
     objects = MyUserManager()
@@ -94,6 +116,8 @@ class User(AbstractUser):
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
     biography = models.CharField(max_length=5000)
     status = models.CharField(max_length=20,choices=STATUS)
+    department = models.ForeignKey(Department,on_delete=models.CASCADE)
+    designation = models.ForeignKey(Designation,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = "email"
@@ -103,40 +127,13 @@ class Admin(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
 
 
-class Department(models.Model):
-    name = models.CharField(max_length=120)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.name
-
-class Designation(models.Model):
-    name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-  
-    def __str__(self):
-        return self.name
-
-class Session(models.Model):
-    start_year = models.DateField(null=False,blank=False,default=datetime.now)
-    end_year = models.DateField(null=False,blank=False,default=datetime.now)
-    def __str__(self):
-        return "from" + str(self.start_year) + "to" + str(self.end_year)
-
-
-
-class Staff(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
-    
-   
 
 
 
 
 class StaffNotification(models.Model):
-    staff = models.ForeignKey(Staff,on_delete=models.CASCADE)
+    staff = models.ForeignKey(User,on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

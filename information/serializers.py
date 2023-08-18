@@ -80,14 +80,16 @@ class InformationSerializer(serializers.ModelSerializer):
         'profile_pic',
         'biography',
         'status',
+        # 'department',
+        # 'designation',
         ]
 
 
 
-class StaffSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Staff
-        fields = '__all__'
+# class StaffSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Staff
+#         fields = '__all__'
 
 
 
