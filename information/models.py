@@ -46,7 +46,6 @@ class User(AbstractUser):
     user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
-
     LOCAL_GOVERNMENT = (
     ('Agege Local Government', 'Agege Local Government'),
     ('Ajeromi-Ifelodun Local Government', 'Ajeromi-Ifelodun Local Government'),
@@ -104,64 +103,6 @@ class Admin(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
 
 
-class Staff(models.Model):
-    STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
-    GENDER = (('MALE','M'),('FEMALE','F'))
-    LOCAL_GOVERNMENT = (
-    ('Agege Local Government', 'Agege Local Government'),
-    ('Ajeromi-Ifelodun Local Government', 'Ajeromi-Ifelodun Local Government'),
-    ('Alimosho Local Government', 'Alimosho Local Government'),
-    ('Amuwo-Odofin Local Government', 'Amuwo-Odofin Local Government'),
-    ('Apapa Local Government', 'Apapa Local Government'),
-    ('Badagry Local Government', 'Badagry Local Government'),
-    ('Epe Local Government', 'Epe Local Government'),
-    ('Eti-Osa Local Government', 'Eti-Osa Local Government'),
-    ('Ibeju-Lekki Local Government', 'Ibeju-Lekki Local Government'),
-    ('Ifako-Ijaiye Local Government', 'Ifako-Ijaiye Local Government'),
-    ('Ikeja Local Government', 'Ikeja Local Government'),
-    ('Ikorodu Local Government', 'Ikorodu Local Government'),
-    ('Kosofe Local Government', 'Kosofe Local Government'),
-    ('Lagos Island Local Government', 'Lagos Island Local Government'),
-    ('Lagos Mainland Local Government', 'Lagos Mainland Local Government'),
-    ('Mushin Local Government', 'Mushin Local Government'),
-    ('Ojo Local Government', 'Ojo Local Government'),
-    ('Oshodi-Isolo Local Government', 'Oshodi-Isolo Local Government'),
-    ('Shomolu Local Government', 'Shomolu Local Government'),
-    ('Surulere Local Government', 'Surulere Local Government'),
-    ('other state in Nigeria','other state in Nigeria'),
-    ('Outside Nigeria', 'Outside Nigeria'),)
-
-    GRADE = (('GL1','GL1'),('GL2','GL2'),('GL3','GL3'),('GL4','GL4'),('GL5','GL5'),('GL6','GL6'),('GL7','GL7'),('GL8','GL8'),('GL9','GL9'),('GL10','GL10'),('GL12','GL12'),('GL13','GL13'),('GL14','GL14'),('GL15','GL15'),('GL16','GL16'),('GL17','GL17'))
-    username = None  # Removed username, using email instead
-    email = models.EmailField(max_length=80,unique=True)
-    surname = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    other_name = models.CharField(max_length=200)
-    grade_level = models.CharField(max_length=5,choices=GRADE,null=False)
-    gender = models.CharField(max_length=6,choices=GENDER,null=False,default='MALE')
-    qualification = models.CharField(max_length=60)
-    date_birth = models.DateField(null=False,blank=False,default=datetime.now)
-    state_origin = models.CharField(max_length=50,choices=LOCAL_GOVERNMENT)
-    designation_appointement = models.CharField(max_length=150)
-    date_first_appointment = models.DateField(null=False,blank=False,default=datetime.now)
-    date_present_appointment = models.DateField(null=False,blank=False,default=datetime.now)
-    employee_number = models.CharField(max_length=20)
-    civil_service_number = models.CharField(max_length=20)
-    mepb_file_number = models.CharField(max_length=20)
-    present_post = models.CharField(max_length=500)
-    mdas_posted = models.CharField(max_length=150)
-    phone_number = models.CharField(max_length=20)
-    phone_num_nextofkin = models.CharField(max_length=20)
-    profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
-    biography = models.CharField(max_length=5000)
-    status = models.CharField(max_length=20,choices=STATUS)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
-    designation = models.ForeignKey(Designation,on_delete=models.DO_NOTHING)
-    department = models.ForeignKey(Department,on_delete=models.DO_NOTHING)
-    # session = models.ForeignKey(Session,on_delete=models.DO_NOTHING)
-
 class Department(models.Model):
     name = models.CharField(max_length=120)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -183,6 +124,15 @@ class Session(models.Model):
     end_year = models.DateField(null=False,blank=False,default=datetime.now)
     def __str__(self):
         return "from" + str(self.start_year) + "to" + str(self.end_year)
+
+
+
+class Staff(models.Model):
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
+    
+   
+
+
 
 
 class StaffNotification(models.Model):
