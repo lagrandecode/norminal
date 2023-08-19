@@ -37,6 +37,8 @@ class MyUserManager(BaseUserManager):
 
         return self.create_user(email,password,**extra_fields)
 
+
+
 class Department(models.Model):
     name = models.CharField(max_length=120)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -123,12 +125,10 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+
+
 class Admin(models.Model):
     admin = models.OneToOneField(User,on_delete=models.CASCADE)
-
-
-
-
 
 
 

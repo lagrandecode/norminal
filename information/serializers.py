@@ -80,8 +80,8 @@ class InformationSerializer(serializers.ModelSerializer):
         'profile_pic',
         'biography',
         'status',
-        # 'department',
-        # 'designation',
+        'department',
+        'designation',
         ]
 
 

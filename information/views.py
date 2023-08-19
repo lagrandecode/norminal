@@ -34,12 +34,14 @@ class LoginView(APIView):
 class UserInfo(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.InformationSerializer
-    permission_class = [IsAdminUser]
+    permission_class = [IsAdminUser,]
     def get(self,request):
-        users = User.objects.all()
+        permission_class = [IsAdminUser,]
+        users = User.objects.all().filter(grade_level=User.grade_level)
         serializers = self.serializer_class(users,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
     def post(self,request):
+        permission_class = [IsAdminUser,]
         serializers = self.serializer_class(data=request.data)
         if serializers.is_valid():
             serializers.save()
