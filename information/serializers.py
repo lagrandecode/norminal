@@ -55,8 +55,8 @@ class InformationSerializer(serializers.ModelSerializer):
     profile_pic = serializers.ImageField()
     biography = serializers.CharField(max_length=5000)
     status = serializers.ChoiceField(choices=STATUS)
-    # department = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all())
-    # designation = serializers.PrimaryKeyRelatedField(queryset=Designation.objects.all())
+    department = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all())
+    designation = serializers.PrimaryKeyRelatedField(queryset=Designation.objects.all())
 
     class Meta:
         model = User
@@ -82,8 +82,8 @@ class InformationSerializer(serializers.ModelSerializer):
         'profile_pic',
         'biography',
         'status',
-        # 'department',
-        # 'designation',
+        'department',
+        'designation',
         ]
 
 
