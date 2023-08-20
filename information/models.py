@@ -118,8 +118,8 @@ class User(AbstractUser):
     profile_pic = models.ImageField(upload_to='images/',null=True,blank=True)
     biography = models.CharField(max_length=5000)
     status = models.CharField(max_length=20,choices=STATUS)
-    department = models.ForeignKey(Department,on_delete=models.CASCADE)
-    designation = models.ForeignKey(Designation,on_delete=models.CASCADE)
+    department = models.ForeignKey(Department,null=True,on_delete=models.CASCADE)
+    designation = models.ForeignKey(Designation,null=True,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = "email"
