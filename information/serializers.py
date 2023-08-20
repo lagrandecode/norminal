@@ -55,6 +55,8 @@ class InformationSerializer(serializers.ModelSerializer):
     profile_pic = serializers.ImageField()
     biography = serializers.CharField(max_length=5000)
     status = serializers.ChoiceField(choices=STATUS)
+    # department = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all())
+    # designation = serializers.PrimaryKeyRelatedField(queryset=Designation.objects.all())
 
     class Meta:
         model = User
@@ -80,16 +82,11 @@ class InformationSerializer(serializers.ModelSerializer):
         'profile_pic',
         'biography',
         'status',
-        'department',
-        'designation',
+        # 'department',
+        # 'designation',
         ]
 
 
-
-# class StaffSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Staff
-#         fields = '__all__'
 
 
 
@@ -101,12 +98,6 @@ class UserCreationSerializer(serializers.ModelSerializer):
         fields = ['email','password']
 
 
-# class AdminSerializer(InformationSerializer):
-#     def __init__(self,*args,**kwargs):
-#         super(AdminSerializer,self).__init__(*args,**kwargs)
-#     class Meta(InformationSerializer.Meta):
-#         model=Admin
-#         fields = InformationSerializer.Meta.fields
 
 
 
