@@ -96,6 +96,13 @@ class UserCreationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email','password']
+        
+
+class StaffSerializer(InformationSerializer):
+    class Meta(InformationSerializer.Meta):
+        model = Staff
+        fields = InformationSerializer.Meta.fields + ['course']
+
 
 
 
