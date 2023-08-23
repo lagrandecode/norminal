@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import APIView
 from .models import *
 from . import serializers
+from django.contrib.auth import authenticate, login
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
+
+
 
 # Create your views here.
 
@@ -22,22 +25,66 @@ class SignupView(generics.GenericAPIView):
 
 
 
+# class LoginView(APIView):
+#     def get(self,request):
+#         if request.user.is_authenticated:
+#             if request.user.user_type == '1':
+#                 return Response({'message':'admin page'})
+#             if request.user.user_type == '2':
+#                 return Response({'message':"staff user interface"})
+
+
+
+
+
+
 class LoginView(APIView):
-    def get(self,request):
-        if request.user.is_authenticated:
-            if request.user.user_type == '1':
-                return Response({'message':'admin page'})
-            if request.user.user_type == '2':
-                return Response({'message':"staff user interface"})
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        
+        if user:
+            login(request, user)
+            
+            if user.user_type == 1:
+                admin_data = Admin.objects.all()
+                # staff_data = {
+                #     'user': user.id,
+                #     'name': user.first_name + ' ' + user.last_name,
+                #     'email': user.email,
+                # }
+                staff_serializer = StaffSerializer(data=admin_data)
+                if staff_serializer.is_valid():
+                    staff_serializer.save()
+                    return Response({'message': 'Staff data saved successfully.'}, status=status.HTTP_200_OK)
+                return Response(staff_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+            elif user.user_type == 2:
+                staff_data = Staff.objects.all()
+                # student_data = {
+                #     'user': user.id,
+                #     'name': user.first_name + ' ' + user.last_name,
+                #     'email': user.email,
+                #     'course': request.data.get('course'),
+                # }
+                student_serializer = StudentSerializer(data=staff_data)
+                if student_serializer.is_valid():
+                    student_serializer.save()
+                    return Response({'message': 'Student data saved successfully.'}, status=status.HTTP_200_OK)
+                return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+        return Response({'message': 'Invalid credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-class UserInfo(generics.GenericAPIView):
-    queryset = User.objects.all()
-    serializer_class = serializers.InformationSerializer
+
+class StaffInfo(generics.GenericAPIView):
+    queryset = Staff.objects.all()
+    serializer_class = serializers.StaffSerializer
     permission_class = [IsAdminUser,]
     def get(self,request):
         permission_class = [IsAdminUser,]
-        users = User.objects.all().filter(grade_level=User.grade_level)
+        users = Staff.objects.all()
         serializers = self.serializer_class(users,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
     def post(self,request):
@@ -58,7 +105,6 @@ class UserInfo(generics.GenericAPIView):
 
 
 
-        
 
 
 
@@ -66,89 +112,72 @@ class UserInfo(generics.GenericAPIView):
 
 
 
-
-
-# class Testingb(generics.GenericAPIView):
-#     def post(self, request):
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid():
-#         # Remove the inherited name field before saving
-#             validated_data = serializer.validated_data
-#             validated_data.pop('name', None)
-        
-#             instance = Textb.objects.create(**validated_data)
-#             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+# class UserInfo(generics.GenericAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = serializers.InformationSerializer
+#     permission_class = [IsAdminUser,]
 #     def get(self,request):
-#         users = Textb.objects.all()
+#         permission_class = [IsAdminUser,]
+#         users = User.objects.all()
 #         serializers = self.serializer_class(users,many=True)
 #         return Response(serializers.data,status=status.HTTP_200_OK)
-#     # def post(self,request):
-#     #     serializers = self.serializer_class(data=request.data)
-#     #     if serializers.is_valid():
-#     #         serializers.save()     
-#     #         return Response(serializers.data,status=status.HTTP_200_OK)
-#     #     return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+#     def post(self,request):
+#         permission_class = [IsAdminUser,]
+#         serializers = self.serializer_class(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data,status=status.HTTP_200_OK)
+#         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-# # class Testingb(generics.GenericAPIView):
-# #     serializer_class = serializers.TestingbSerializer  # Make sure to define this attribute
-    
-# #     def post(self, request):
-# #         serializer = self.serializer_class(data=request.data)
-# #         if serializer.is_valid():
-# #             validated_data = serializer.validated_data
-# #             validated_data.pop('name', None)
+
+
+
+
+
+
+
+
+
+
+
+
+# class AuthorView(generics.GenericAPIView):
+#     queryset = Author.objects.all()
+#     serializer_class = serializers.AuthorSerializer
+#     permission_class = [IsAdminUser,]
+#     def get(self,request):
+#         permission_class = [IsAdminUser,]
+#         users = Author.objects.all()
+#         serializers = self.serializer_class(users,many=True)
+#         return Response(serializers.data,status=status.HTTP_200_OK)
+#     def post(self,request):
+#         permission_class = [IsAdminUser,]
+#         serializers = self.serializer_class(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data,status=status.HTTP_200_OK)
+#         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
         
-# #             instance = Textb.objects.create(**validated_data)
-# #             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
-# #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-# #     def get(self, request):
-# #         users = Textb.objects.all()
-# #         serializer = self.serializer_class(users, many=True)
-# #         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# # class Testingb(generics.ListCreateAPIView):
-# #     queryset = Textb.objects.all()  # Define the queryset attribute
-# #     serializer_class = serializers.TestingbSerializer
-# #     permission_classes = [IsAdminUser]
-
-# #     def post(self, request, *args, **kwargs):
-# #         serializer = self.serializer_class(data=request.data)
-# #         if serializer.is_valid():
-# #             validated_data = serializer.validated_data
-# #             instance = Textb.objects.create(**validated_data)
-# #             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
-# #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-# #     def get(self, request, *args, **kwargs):
-# #         queryset = self.get_queryset()  # Use the queryset attribute
-# #         serializer = self.serializer_class(queryset, many=True)
-# #         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-
-# # class Testingb(generics.GenericAPIView):
-# #     # queryset = Textb.objects.all()  # Define the queryset attribute
-# #     # serializer_class = serializers.TestingbSerializer
-# #     # permission_classes = [IsAdminUser]
-
-# #     def post(self, request):
-# #         serializer = self.serializer_class(data=request.data)
-# #         if serializer.is_valid():
-# #             # validated_data = serializer.validated_data
-# #             # validated_data.pop('name', None)  # Remove the 'name' field
-# #             instance = Textb.objects.create(**validated_data)
-# #             return Response(self.serializer_class(instance).data, status=status.HTTP_201_CREATED)
-# #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# #     # def get(self, request):
-# #     #     queryset = Textb.objects.all()
-# #     #     serializer = self.serializer_class(queryset, many=True)
-# #     #     return Response(serializer.data, status=status.HTTP_200_OK)
+# class BookView(generics.GenericAPIView):
+#     queryset = Book.objects.all()
+#     serializer_class = serializers.BookSerializer
+#     permission_class = [IsAdminUser,]
+#     def get(self,request):
+#         permission_class = [IsAdminUser,]
+#         users = Book.objects.all()
+#         serializers = self.serializer_class(users,many=True)
+#         return Response(serializers.data,status=status.HTTP_200_OK)
+#     def post(self,request):
+#         permission_class = [IsAdminUser,]
+#         serializers = self.serializer_class(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data,status=status.HTTP_200_OK)
+#         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+        
 
 
 

@@ -38,6 +38,17 @@ class MyUserManager(BaseUserManager):
         return self.create_user(email,password,**extra_fields)
 
 
+class User(AbstractUser):
+    objects = MyUserManager()
+    USER_TYPE = ((1,'"HOD',),(2,"Staff"))
+    user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
+    email = models.EmailField(max_length=80,unique=True)
+    username = None  # Removed username, using email instead
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+
+
 
 class Department(models.Model):
     name = models.CharField(max_length=120)
@@ -62,12 +73,15 @@ class Session(models.Model):
         return "from" + str(self.start_year) + "to" + str(self.end_year)
 
 
-class User(AbstractUser):
-    objects = MyUserManager()
+
+class Admin(models.Model):
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
 
 
-    USER_TYPE = ((1,'"HOD',),(2,"Staff"))
-    user_type = models.CharField(default=1,choices=USER_TYPE,max_length=1)
+
+
+class Staff(models.Model):
+    admin = models.OneToOneField(User,on_delete=models.CASCADE)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
     LOCAL_GOVERNMENT = (
@@ -95,7 +109,7 @@ class User(AbstractUser):
     ('Outside Nigeria', 'Outside Nigeria'),)
 
     GRADE = (('GL1','GL1'),('GL2','GL2'),('GL3','GL3'),('GL4','GL4'),('GL5','GL5'),('GL6','GL6'),('GL7','GL7'),('GL8','GL8'),('GL9','GL9'),('GL10','GL10'),('GL12','GL12'),('GL13','GL13'),('GL14','GL14'),('GL15','GL15'),('GL16','GL16'),('GL17','GL17'))
-    username = None  # Removed username, using email instead
+
     email = models.EmailField(max_length=80,unique=True)
     surname = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -122,25 +136,9 @@ class User(AbstractUser):
     designation = models.ForeignKey(Designation,null=True,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-
-
-class Course(models.Model):
-    name = models.CharField(max_length=120)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
-
-
-class Admin(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
-
-class Staff(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, blank=False)
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
+        return self.admin.name
 
 
 
@@ -167,3 +165,23 @@ def save_user_profile(sender,instance,**kwargs):
     if instance.user_type==2:
         instance.staff.save()
 
+
+
+
+
+
+#testing 
+
+# class Author(models.Model):
+#     name = models.CharField(max_length=100)
+
+
+#     def __str__(self):
+#         return self.name
+
+# class Book(models.Model):
+#     title = models.CharField(max_length=100)
+#     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.title
