@@ -27,12 +27,26 @@ class StaffSerializer(serializers.ModelSerializer):
 
 
 
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = '__all__'
+    
+    def get_department_text(self,obj):
+        try:
+            department.objects.get(pk=obj.department)
+
+        except Department.DoesNotExist:
+            return None
 
 
 
 
 
-
+class DesignationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Designation
+        fields = '__all__'
 
 
 
