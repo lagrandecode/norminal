@@ -44,9 +44,24 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class DesignationSerializer(serializers.ModelSerializer):
+    def _get_designation(self,obj):
+        return obj.designation.name
     class Meta:
         model = Designation
         fields = '__all__'
+
+
+
+
+# class DesignationSerializer(serializers.ModelSerializer):
+#     designation_name = serializers.SerializerMethodField()
+
+#     def get_designation_name(self, obj):
+#         return obj.name
+
+#     class Meta:
+#         model = Designation
+#         fields = '__all__'
 
 
 
