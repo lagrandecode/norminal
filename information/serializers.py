@@ -14,10 +14,10 @@ class UserCreationSerializer(serializers.ModelSerializer):
         fields = ['email','password']
 
 
-class AdminSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Admin
-        fields = '__all__'
+# class AdminSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Admin
+#         fields = '__all__'
 
 
 class StaffSerializer(serializers.ModelSerializer):

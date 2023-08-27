@@ -74,14 +74,14 @@ class Session(models.Model):
 
 
 
-class Admin(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
+# class Admin(models.Model):
+#     admin = models.OneToOneField(User,on_delete=models.CASCADE)
 
 
 
 
 class Staff(models.Model):
-    admin = models.OneToOneField(User,on_delete=models.CASCADE)
+    # admin = models.OneToOneField(User,on_delete=models.CASCADE)
     STATUS = [('ACTIVE','ACTIVE'),('RETIRED','RETIRED'),('RESIGNED','RESIGNED'),('OTHERS','OTHERS')]
     GENDER = (('MALE','M'),('FEMALE','F'))
     LOCAL_GOVERNMENT = (
