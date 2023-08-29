@@ -49,6 +49,32 @@ class StaffInfo(generics.GenericAPIView):
 
 
 
+class DepartmentInfo(generics.GenericAPIView):
+    queryset = Department.objects.all()
+    serializer_class = serializers.DepartmentSerializer
+    permission_class = [IsAdminUser,]
+    def get(self,request):
+        # ordering = request.query_params.get('created_at')
+        users = Department.objects.all()
+        serializers = self.serializer_class(users,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+
+    def post(self,request):
+        serializers = self.serializer_class(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_200_OK)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
+
+
+
 
 
 
